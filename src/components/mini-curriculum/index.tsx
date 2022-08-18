@@ -1,4 +1,11 @@
-import { Container, Flex, Stack, Text, Avatar } from "@chakra-ui/react";
+import {
+  Container,
+  Flex,
+  Stack,
+  Text,
+  Avatar,
+  Divider,
+} from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useCurriculum } from "src/redux/slices/curriculum";
 import {
@@ -62,9 +69,20 @@ export function MiniCurriculum() {
                 <Text fontSize={8}>{curriculum.personalData.linkedin}</Text>
               </Stack>
             </Stack>
+
+            <Stack direction="column" spacing={0.1} mt={8}>
+              <Text fontSize={13} color="blue.700" fontWeight="medium">
+                Objetivos
+              </Text>
+              <Text fontSize={10} color="gray.700" wordBreak="break-word">
+                {curriculum.goals}
+              </Text>
+            </Stack>
+
+            <Divider mt={3} />
           </Container>
         </Stack>
-        <Flex w="30%" bg="blue.700" />
+        <Flex w="30%" bg="blue.900" />
       </Flex>
     </Stack>
   );

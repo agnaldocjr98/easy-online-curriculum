@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+interface Steps {
+  personalData: boolean;
+  goals: boolean;
+}
 interface PersonalData {
   name: string;
   email: string;
@@ -27,6 +31,7 @@ export interface Curriculum {
   goals: string;
   formation?: Formation[];
   experience?: Experience[];
+  steps: Steps;
 }
 
 const initial_state: Curriculum = {
@@ -38,12 +43,25 @@ const initial_state: Curriculum = {
     linkedin: "",
   },
   goals: "",
+  steps: {
+    personalData: false,
+    goals: false,
+  },
 };
 
 const curriculum = createSlice({
   name: "curriculum",
   initialState: initial_state,
   reducers: {
+    changeStep(
+      state,
+      { payload }: PayloadAction<{ key: string; value: boolean }>
+    ) {
+      return {
+        ...state,
+        steps: { ...state.steps, [payload.key]: payload.value },
+      };
+    },
     setPersonalData(
       state,
       { payload }: PayloadAction<{ key: string; value: string }>
@@ -63,7 +81,7 @@ const curriculum = createSlice({
 });
 
 export default curriculum.reducer;
-export const { setPersonalData, setGoals } = curriculum.actions;
+export const { setPersonalData, setGoals, changeStep } = curriculum.actions;
 
 export function useCurriculum(state: any) {
   return state.curriculum as Curriculum;
