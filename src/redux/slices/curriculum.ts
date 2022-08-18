@@ -1,8 +1,10 @@
+import { Experience } from "@/components/experience";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Steps {
   personalData: boolean;
   goals: boolean;
+  experience: boolean;
 }
 interface PersonalData {
   name: string;
@@ -20,17 +22,19 @@ interface Formation {
 }
 
 interface Experience {
+  id: number;
   company_name: string;
   role_name: string;
   role_description: string;
-  ini_role: string;
+  ini_role?: string;
   fin_role?: string;
+  current?: boolean;
 }
 export interface Curriculum {
   personalData: PersonalData;
   goals: string;
   formation?: Formation[];
-  experience?: Experience[];
+  experience: Experience[];
   steps: Steps;
 }
 
@@ -43,9 +47,24 @@ const initial_state: Curriculum = {
     linkedin: "",
   },
   goals: "",
+  experience: [
+    {
+      id: 1,
+      company_name: "",
+      role_description: "",
+      role_name: "",
+    },
+    {
+      id: 2,
+      company_name: "",
+      role_description: "",
+      role_name: "",
+    },
+  ],
   steps: {
     personalData: false,
     goals: false,
+    experience: false,
   },
 };
 
@@ -77,11 +96,38 @@ const curriculum = createSlice({
     setGoals(state, { payload }: PayloadAction<string>) {
       return { ...state, goals: payload };
     },
+    AddExperience(state, { payload }: PayloadAction<Experience>) {
+      return { ...state, experience: [...state.experience, payload] };
+    },
+    changeExperience(
+      state,
+      { payload }: PayloadAction<{ id: number; key: string; value: string }>
+    ) {
+      return {
+        ...state,
+        experience: state.experience.map((exp: Experience) =>
+          exp.id === payload.id ? { ...exp, [payload.key]: payload.value } : exp
+        ),
+      };
+    },
+    removeExperience(state, { payload }: PayloadAction<number>) {
+      return {
+        ...state,
+        experience: state.experience.filter((exp) => exp.id !== payload),
+      };
+    },
   },
 });
 
 export default curriculum.reducer;
-export const { setPersonalData, setGoals, changeStep } = curriculum.actions;
+export const {
+  setPersonalData,
+  setGoals,
+  changeStep,
+  AddExperience,
+  changeExperience,
+  removeExperience,
+} = curriculum.actions;
 
 export function useCurriculum(state: any) {
   return state.curriculum as Curriculum;

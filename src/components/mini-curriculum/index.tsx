@@ -29,7 +29,7 @@ export function MiniCurriculum() {
         rounded="lg"
         position="relative"
       >
-        <Avatar
+        {/* <Avatar
           name="John Doe"
           position="absolute"
           right={24}
@@ -37,7 +37,7 @@ export function MiniCurriculum() {
           w="70px"
           h="70px"
           color="white"
-        />
+        /> */}
         <Stack flex={1}>
           <Container maxW="container.lg" mt={4}>
             <Stack spacing={0.1}>
@@ -71,10 +71,10 @@ export function MiniCurriculum() {
             </Stack>
 
             <Stack direction="column" spacing={0.1} mt={8}>
-              <Text fontSize={13} color="blue.700" fontWeight="medium">
+              <Text fontSize={11} color="blue.700" fontWeight="medium">
                 Objetivos
               </Text>
-              <Text fontSize={10} color="gray.700" wordBreak="break-word">
+              <Text fontSize={9} color="gray.700" wordBreak="break-word">
                 {curriculum.goals}
               </Text>
             </Stack>
@@ -82,7 +82,7 @@ export function MiniCurriculum() {
             <Divider mt={3} />
           </Container>
         </Stack>
-        <Flex w="30%" bg="blue.900" />
+        <Flex w="30%" bg="blue.900" borderRightRadius="md" />
       </Flex>
     </Stack>
   );
