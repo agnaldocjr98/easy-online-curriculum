@@ -1,19 +1,7 @@
-import {
-  Text,
-  Stack,
-  FormControl,
-  FormLabel,
-  Input,
-  Flex,
-  Button,
-} from "@chakra-ui/react";
+import { Text, Stack, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import InputMask from "react-input-mask";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  changeStep,
-  setPersonalData,
-  useCurriculum,
-} from "src/redux/slices/curriculum";
+import { setPersonalData, useCurriculum } from "src/redux/slices/curriculum";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 
 export function PersonalData() {
@@ -34,17 +22,10 @@ export function PersonalData() {
       alert('O campo "Telefone" é obrigatório!!!');
       return;
     }
-    dispatch(changeStep({ key: "personalData", value: true }));
   }
 
   return (
-    <Stack
-      w="100%"
-      shadow="md"
-      direction="column"
-      rounded="md"
-      bg={curriculum.steps.personalData ? "gray.50" : "white"}
-    >
+    <Stack w="100%" shadow="md" direction="column" rounded="md">
       <Stack
         h="35px"
         bg="blue.900"
@@ -57,11 +38,10 @@ export function PersonalData() {
         <Text ml={2} fontWeight="semibold" fontSize={14} color="white">
           1 - Dados Pessoais
         </Text>
-        {curriculum.steps.personalData && (
-          <CheckCircleIcon
-            style={{ width: "25px", height: "25px", color: "white" }}
-          />
-        )}
+
+        <CheckCircleIcon
+          style={{ width: "25px", height: "25px", color: "white" }}
+        />
       </Stack>
       <Stack spacing={2} direction="column" p={4}>
         <FormControl>
@@ -69,7 +49,6 @@ export function PersonalData() {
             Nome
           </FormLabel>
           <Input
-            readOnly={curriculum.steps.personalData}
             placeholder="Nome"
             fontSize={12}
             size="sm"
@@ -85,7 +64,6 @@ export function PersonalData() {
             Cargo Atual (Opcional)
           </FormLabel>
           <Input
-            readOnly={curriculum.steps.personalData}
             placeholder="Cargo Atual"
             fontSize={12}
             size="sm"
@@ -107,7 +85,6 @@ export function PersonalData() {
               E-mail
             </FormLabel>
             <Input
-              readOnly={curriculum.steps.personalData}
               placeholder="Email"
               fontSize={12}
               size="sm"
@@ -125,7 +102,6 @@ export function PersonalData() {
               Telefone
             </FormLabel>
             <Input
-              readOnly={curriculum.steps.personalData}
               placeholder="Telefone"
               fontSize={12}
               size="sm"
@@ -145,7 +121,6 @@ export function PersonalData() {
             LinkedIn (Opcional)
           </FormLabel>
           <Input
-            readOnly={curriculum.steps.personalData}
             placeholder="LinkedIn"
             fontSize={12}
             size="sm"
@@ -158,29 +133,6 @@ export function PersonalData() {
             }
           />
         </FormControl>
-
-        <Stack direction="row" spacing={2} justify="flex-end">
-          <Button
-            disabled={!curriculum.steps.personalData}
-            colorScheme="blue"
-            size="sm"
-            fontWeight="medium"
-            onClick={() =>
-              dispatch(changeStep({ key: "personalData", value: false }))
-            }
-          >
-            Alterar
-          </Button>
-          <Button
-            disabled={curriculum.steps.personalData}
-            colorScheme="green"
-            size="sm"
-            fontWeight="medium"
-            onClick={handleValidAllFields}
-          >
-            Continuar
-          </Button>
-        </Stack>
       </Stack>
     </Stack>
   );

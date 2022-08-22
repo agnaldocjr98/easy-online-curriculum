@@ -1,11 +1,6 @@
 import { Experience } from "@/components/experience";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Steps {
-  personalData: boolean;
-  goals: boolean;
-  experience: boolean;
-}
 interface PersonalData {
   name: string;
   email: string;
@@ -28,14 +23,13 @@ interface Experience {
   role_description: string;
   ini_role?: string;
   fin_role?: string;
-  current?: boolean;
+  current?: string;
 }
 export interface Curriculum {
   personalData: PersonalData;
   goals: string;
   formation?: Formation[];
   experience: Experience[];
-  steps: Steps;
 }
 
 const initial_state: Curriculum = {
@@ -54,33 +48,13 @@ const initial_state: Curriculum = {
       role_description: "",
       role_name: "",
     },
-    {
-      id: 2,
-      company_name: "",
-      role_description: "",
-      role_name: "",
-    },
   ],
-  steps: {
-    personalData: false,
-    goals: false,
-    experience: false,
-  },
 };
 
 const curriculum = createSlice({
   name: "curriculum",
   initialState: initial_state,
   reducers: {
-    changeStep(
-      state,
-      { payload }: PayloadAction<{ key: string; value: boolean }>
-    ) {
-      return {
-        ...state,
-        steps: { ...state.steps, [payload.key]: payload.value },
-      };
-    },
     setPersonalData(
       state,
       { payload }: PayloadAction<{ key: string; value: string }>
@@ -96,8 +70,23 @@ const curriculum = createSlice({
     setGoals(state, { payload }: PayloadAction<string>) {
       return { ...state, goals: payload };
     },
-    AddExperience(state, { payload }: PayloadAction<Experience>) {
-      return { ...state, experience: [...state.experience, payload] };
+    AddExperience(state) {
+      const data = state.experience;
+      data.sort((a, b) => a.id - b.id);
+      console.log(data);
+
+      return {
+        ...state,
+        experience: [
+          ...state.experience,
+          {
+            id: state.experience[state.experience.length - 1].id + 1,
+            company_name: "",
+            role_description: "",
+            role_name: "",
+          },
+        ],
+      };
     },
     changeExperience(
       state,
@@ -123,7 +112,6 @@ export default curriculum.reducer;
 export const {
   setPersonalData,
   setGoals,
-  changeStep,
   AddExperience,
   changeExperience,
   removeExperience,
